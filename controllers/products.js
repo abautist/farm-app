@@ -11,9 +11,6 @@ router.route("/")
 		}).catch(function(err){
 			console.log('error!,', err);
 		});
-	})
-	.post(function(req,res){
-		db.product.findOrCreate
 	});
 
 module.exports = router;
