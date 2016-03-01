@@ -9,7 +9,18 @@ router.route("/")
 		db.product.findAll().then(function(product){
 			res.send(product);
 		}).catch(function(err){
-			console.log('error!,', err);
+			console.log("error", err);
+		});
+	})
+	.post(function(req,res){
+		db.product.create({
+			name: req.body.name,
+			price: req.body.price,
+			image: req.body.image
+		}).then(function(newProduct){
+			res.send(newProduct);
+		}).catch(function(err){
+			console.log("error", err);
 		});
 	});
 
