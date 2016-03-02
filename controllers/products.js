@@ -51,7 +51,8 @@ router.route("/:id")
 		});
 	})
 	.delete(function(req,res){
-		db.product.findById(req.params.id).then(function(product){
+		let id = req.params.id;
+		db.product.findById(id).then(function(product){
 			return product.destroy();
 		})
 		.then(function(){

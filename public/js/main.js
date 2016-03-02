@@ -7,10 +7,45 @@ const React = require("react");
 const MyApp = React.createClass({displayName: "MyApp",
 	render: function(){
 		return(
-				React.createElement("h1", null, "Hello!")
+				React.createElement("div", null, 
+					React.createElement("h1", null, "Jumanji Farm Fresh Sheet"), 
+					React.createElement(ProductSheet, null)
+				)
 			)
 	}
 });
+
+const ProductSheet = React.createClass({displayName: "ProductSheet",
+	getInitialState: function() {
+		return {
+			products: [],
+			message: ""
+		};
+	},
+	getProducts: function() {
+		this.setState({
+			products: [],
+			message: "Loading..."
+		});
+		let self = this;
+		$.get("/api/products").done(function(products){
+			self.setState({products});
+		})
+	},
+	render: function(){
+		return(
+				React.createElement("div", null, 
+					React.createElement("h3", null, " Test!"), 
+					React.createElement("button", {type: "button", onClick: this.getProducts}, "Click Here"), 
+					this.state.products.map(function(product){
+						return (
+								React.createElement("div", {key: product.id}, product.name, React.createElement("img", {src: product.image}))
+							)
+					})
+				)
+			)
+	}
+})
 
 module.exports = MyApp;
 
