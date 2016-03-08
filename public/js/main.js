@@ -30,24 +30,56 @@ const ProductSheet = React.createClass({displayName: "ProductSheet",
 		let self = this;
 		$.get("/api/products").done(function(products){
 			self.setState({products});
+			console.log(products);
 		})
 	},
 	render: function(){
 		return(
+			React.createElement("div", null, 
+				React.createElement(SearchBox, {search: this.getProducts}), 
+				"// ", React.createElement(ResultList, {data: this.state.products})
+			)
+			)
+	}
+})
+
+const SearchBox = React.createClass({displayName: "SearchBox",
+	getInitialState: function() {
+		return {
+			searchTerm: ""
+		};
+	},
+	changeSearchField: function(e) {
+		this.setState({
+			searchTerm: e.target.value
+		});
+	},
+	passSearchTerm: function(e) {
+		e.preventDefault();
+		this.props.search(this.state.searchTerm);
+	},
+	render: function(){
+		return(
 				React.createElement("div", null, 
-					React.createElement("h3", null, " Test!"), 
-					React.createElement("button", {type: "button", onClick: this.getProducts}, "Click Here"), 
-					this.state.products.map(function(product){
-						return (
-								React.createElement("div", {key: product.id}, product.name, React.createElement("img", {src: product.image}))
-							)
-					})
+					React.createElement("form", {onSubmit: this.passSearchTerm}, 
+						React.createElement("input", {type: "text", placeholder: "Search for vegetables...", value: this.state.searchTerm, onChange: this.changeSearchField, className: "form-control"})
+					)
 				)
 			)
 	}
 })
 
 module.exports = MyApp;
+
+
+				// <div>
+				// 	<button type="button" onClick={this.getProducts}>Click Here</button>
+				// 	{this.state.products.map(function(product){
+				// 		return (
+				// 				<div className="well" key={product.id}>{product.name} | {product.id}</div>
+				// 			)
+				// 	})}
+				// </div>
 
 },{"react":160}],2:[function(require,module,exports){
 "use strict"
