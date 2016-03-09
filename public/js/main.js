@@ -29,57 +29,49 @@ const ProductSheet = React.createClass({displayName: "ProductSheet",
 		});
 		let self = this;
 		$.get("/api/products").done(function(products){
-			self.setState({products});
+			self.setState({
+				products: products,
+				message: ""
+			});
 			console.log(products);
 		})
 	},
 	render: function(){
 		return(
 			React.createElement("div", null, 
-				React.createElement(SearchBox, {search: this.getProducts}), 
-				"// ", React.createElement(ResultList, {data: this.state.products})
+				React.createElement("button", {type: "button", onClick: this.getProducts}, "Get Fresh!"), 
+				React.createElement("h1", null, this.state.message), 
+				React.createElement(ResultList, {data: this.state.products})
 			)
 			)
 	}
 })
 
-const SearchBox = React.createClass({displayName: "SearchBox",
-	getInitialState: function() {
-		return {
-			searchTerm: ""
-		};
-	},
-	changeSearchField: function(e) {
-		this.setState({
-			searchTerm: e.target.value
+const ResultList = React.createClass({displayName: "ResultList",
+	render: function() {
+		let resultItems = this.props.data.map(function(item, idx){
+			return React.createElement(ResultItem, {key: idx, data: item});
 		});
-	},
-	passSearchTerm: function(e) {
-		e.preventDefault();
-		this.props.search(this.state.searchTerm);
-	},
-	render: function(){
-		return(
+		return (
 				React.createElement("div", null, 
-					React.createElement("form", {onSubmit: this.passSearchTerm}, 
-						React.createElement("input", {type: "text", placeholder: "Search for vegetables...", value: this.state.searchTerm, onChange: this.changeSearchField, className: "form-control"})
-					)
+					resultItems
 				)
 			)
 	}
-})
+});
+
+const ResultItem = React.createClass({displayName: "ResultItem",
+	render: function() {
+		let item = this.props.data;
+		return (
+			React.createElement("div", {className: "well"}, 
+				React.createElement("h1", null, item.variety, " - ", React.createElement("small", null, item.vegetable))
+			)
+			)
+	}
+});
 
 module.exports = MyApp;
-
-
-				// <div>
-				// 	<button type="button" onClick={this.getProducts}>Click Here</button>
-				// 	{this.state.products.map(function(product){
-				// 		return (
-				// 				<div className="well" key={product.id}>{product.name} | {product.id}</div>
-				// 			)
-				// 	})}
-				// </div>
 
 },{"react":160}],2:[function(require,module,exports){
 "use strict"

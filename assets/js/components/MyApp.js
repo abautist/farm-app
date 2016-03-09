@@ -28,54 +28,47 @@ const ProductSheet = React.createClass({
 		});
 		let self = this;
 		$.get("/api/products").done(function(products){
-			self.setState({products});
+			self.setState({
+				products: products,
+				message: ""
+			});
 			console.log(products);
 		})
 	},
 	render: function(){
 		return(
 			<div>
-				<SearchBox search={this.getProducts} />
-				// <ResultList data={this.state.products} />
+				<button type="button" onClick={this.getProducts}>Get Fresh!</button>
+				<h1>{this.state.message}</h1>
+				<ResultList data={this.state.products} />
 			</div>
 			)
 	}
 })
 
-const SearchBox = React.createClass({
-	getInitialState: function() {
-		return {
-			searchTerm: ""
-		};
-	},
-	changeSearchField: function(e) {
-		this.setState({
-			searchTerm: e.target.value
+const ResultList = React.createClass({
+	render: function() {
+		let resultItems = this.props.data.map(function(item, idx){
+			return <ResultItem key={idx} data={item} />;
 		});
-	},
-	passSearchTerm: function(e) {
-		e.preventDefault();
-		this.props.search(this.state.searchTerm);
-	},
-	render: function(){
-		return(
+		return (
 				<div>
-					<form onSubmit={this.passSearchTerm}>
-						<input type="text" placeholder="Search for vegetables..." value={this.state.searchTerm} onChange={this.changeSearchField} className="form-control" />
-					</form>
+					{resultItems}
 				</div>
 			)
 	}
-})
+});
+
+const ResultItem = React.createClass({
+	render: function() {
+		let item = this.props.data;
+		return (
+			<div className="well">
+				<h1>{item.variety} - <small>{item.vegetable}</small></h1>
+			</div>
+			)
+	}
+});
 
 module.exports = MyApp;
 
-
-				// <div>
-				// 	<button type="button" onClick={this.getProducts}>Click Here</button>
-				// 	{this.state.products.map(function(product){
-				// 		return (
-				// 				<div className="well" key={product.id}>{product.name} | {product.id}</div>
-				// 			)
-				// 	})}
-				// </div>

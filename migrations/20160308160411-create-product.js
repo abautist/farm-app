@@ -8,14 +8,26 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      vegetable: {
+        type: Sequelize.STRING
+      },
+      variety: {
         type: Sequelize.STRING
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       image: {
         type: Sequelize.TEXT
+      },
+      unit: {
+        type: Sequelize.STRING
+      },
+      plantingDate: {
+        type: Sequelize.DATE
+      },
+      plantingMethod: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
