@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     image: DataTypes.TEXT,
     unit: DataTypes.STRING,
     plantingDate: DataTypes.DATE,
-    plantingMethod: DataTypes.STRING
+    plantingMethod: DataTypes.STRING,
+    available: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

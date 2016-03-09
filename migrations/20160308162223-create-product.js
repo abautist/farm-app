@@ -29,6 +29,9 @@ module.exports = {
       plantingMethod: {
         type: Sequelize.STRING
       },
+      available: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
