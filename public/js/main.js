@@ -33,7 +33,6 @@ const ProductSheet = React.createClass({displayName: "ProductSheet",
 				products: products,
 				message: ""
 			});
-			console.log(products);
 		})
 	},
 	render: function(){
@@ -55,17 +54,23 @@ const ResultList = React.createClass({displayName: "ResultList",
 		return (
 				React.createElement("div", null, 
 					resultItems
+
 				)
 			)
 	}
 });
 
 const ResultItem = React.createClass({displayName: "ResultItem",
-	render: function() {
+	addProduct: function() {
+    
+    console.log("Bought");
+  },
+  render: function() {
 		let item = this.props.data;
 		return (
 			React.createElement("div", {className: "well"}, 
-				React.createElement("h1", null, item.variety, " - ", React.createElement("small", null, item.vegetable))
+				React.createElement("h1", null, item.variety, " - ", React.createElement("small", null, item.vegetable)), 
+        React.createElement("button", {type: "button", onClick: this.addProduct}, "BUY!")
 			)
 			)
 	}

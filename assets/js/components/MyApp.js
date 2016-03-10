@@ -32,7 +32,6 @@ const ProductSheet = React.createClass({
 				products: products,
 				message: ""
 			});
-			console.log(products);
 		})
 	},
 	render: function(){
@@ -54,17 +53,23 @@ const ResultList = React.createClass({
 		return (
 				<div>
 					{resultItems}
+
 				</div>
 			)
 	}
 });
 
 const ResultItem = React.createClass({
-	render: function() {
+	addProduct: function() {
+    
+    console.log("Bought");
+  },
+  render: function() {
 		let item = this.props.data;
 		return (
 			<div className="well">
 				<h1>{item.variety} - <small>{item.vegetable}</small></h1>
+        <button type="button" onClick={this.addProduct}>BUY!</button>
 			</div>
 			)
 	}
