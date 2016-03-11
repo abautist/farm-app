@@ -33,32 +33,30 @@ router.route("/:id")
 		});
 	})
 	.put(function(req,res){
-		db.product.update({
-			name: req.body.name,
-			price: req.body.price,
-			image: req.body.image
-		},
+		db.product.update(req.body,
 		{ where: 
 				{
 					id: req.params.id
 				}
 		})
 		.then(function(){
-			console.log("successfully updated!");
+			res.send({'message':'success'});
 		})
 		.catch(function(err){
+			return res.status(500).send(err);
 			console.log("error", err);
 		});
 	})
 	.delete(function(req,res){
 		let id = req.params.id;
-		db.product.findById(id).then(function(product){
+		db.product.findById(id)
+		.then(function(product){
 			return product.destroy();
-		})
-		.then(function(){
+			res.send({'message':'success'});
 			console.log("successfully removed item from db");
 		})
 		.catch(function(err){
+			return res.status(500).send(err);
 			console.log("error", err);
 		})
 	});
