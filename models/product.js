@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     plantingDate: DataTypes.DATE,
     plantingMethod: DataTypes.STRING,
     available: DataTypes.STRING,
-    amountAvailable: DataTypes.INTEGER
+    amountAvailable: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
